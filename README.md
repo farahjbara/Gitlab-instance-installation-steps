@@ -5,6 +5,7 @@
 ```bash
 helm repo add gitlab https://charts.gitlab.io
 helm repo update gitlab
+   ```
 ## Install Gitlab Helm Chart
 
 To install GitLab using Helm, run the following command:
@@ -15,6 +16,7 @@ helm install --namespace gitlab gitlab gitlab/gitlab --version 7.9.0 \
   --set certmanager.install=false \
   --set global.ingress.configureCertmanager=false \
   --set gitlab-runner.install=false
+   ```
 ### Note:
  This installation is done without using a values.yaml file.
 ## Deploy TLS Secret and Ingress
@@ -23,7 +25,8 @@ Create a TLS secret:  <br>
 
 Create an Ingress: <br>
 
-```bash
+
+```yaml
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
@@ -45,6 +48,7 @@ spec:
             name: gitlab-webservice-default
             port:
               number: 8181
+   ```
 
 `kubectl apply -f ingress.yaml`
 
@@ -60,11 +64,10 @@ If you encounter any issues or need to troubleshoot, you can view the entire val
 ```bash
 helm get values gitlab -n gitlab 
 helm show values gitlab/gitlab -n gitlab
-
+   ```
 ## Applying Configuration Changes
 
 To apply configuration changes after installation, you can use the helm upgrade command along with your updated configuration file (gitlab.yaml): <br>
-
 
 `helm upgrade gitlab gitlab/gitlab -f gitlab.yaml`
 
